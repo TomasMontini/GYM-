@@ -39,10 +39,7 @@
         #miElemento {
             width: 105px;
             height: 150px;
-            background-color: none; /* Color inicial */
-			position:absolute;
-			left:50%;
-			top:50%;
+            background-color: none; /* Color inicial */ 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -52,7 +49,7 @@
             border-radius: 5px;
             transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
             text-align: center;
-			transform:translate(-30%,30%) scale(3);
+			transform:translate(30%,-50%) scale(3);
 			z-index:-1;
         }
 		.parte{
@@ -65,7 +62,7 @@
 </head>
 <body>
     <h1>Selecciona un color:</h1>
-    <select id="miSelector" onClick="seleccionado()">
+    <select id="miSelector" onChange="seleccionado()">
         <option value="cuello">cuello</option>
         <option value="trapecio">trapecio</option>
         <option value="hombro_posterior">hombro  posterior</option>
