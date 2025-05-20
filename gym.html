@@ -62,7 +62,7 @@
 </head>
 <body>
     <h1>Selecciona un color:</h1>
-    <select id="miSelector" onChange="seleccionado()">
+    <select id="miSelector">
         <option value="cuello">cuello</option>
         <option value="trapecio">trapecio</option>
         <option value="hombro_posterior">hombro  posterior</option>
@@ -284,8 +284,9 @@
 	</div>
 
     <script>
+		const selector = document.getElementById("miSelector");
+		selector.onchange = function() {seleccionado()}
 		function seleccionado(){
-			const selector = document.getElementById("miSelector");
 			const elemento = document.getElementById(selector.value);
 			const partes = document.getElementsByClassName("parte");
 			for(var i=0; i<partes.length;i++){
