@@ -9,7 +9,8 @@
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: left;
+			padding:20px;
             justify-content: center;
             min-height: 100vh;
             margin: 0;
@@ -23,6 +24,7 @@
 
         select {
             padding: 10px;
+            margin-left: 50px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -39,6 +41,7 @@
         #miElemento {
             width: 105px;
             height: 150px;
+			margin-left:400px;
             background-color: none; /* Color inicial */ 
             display: flex;
             align-items: center;
@@ -52,17 +55,51 @@
 			transform:translate(30%,-50%) scale(3);
 			z-index:-1;
         }
+		.opcion{
+			position:absolute;
+			visibility:hidden;
+			width:100%;
+			display:flex;
+			flex-direction:column;
+		}
 		.parte{
 		fill:white;
 		}
 		.rojo{
 		fill:red;
 		}
+		#info{
+			background:none;
+			width:600px;
+			height:500px;
+			position:absolute;
+			left:50%;
+			top:25%;
+			border:solid 2px black;
+			border-radius:50px;
+		}
+		.desplegar{
+			animation: desp 5s linear forwards;
+		}
+		@keyframes desp{
+		0%{
+			height:0px;
+			overflow:hidden;
+			}
+		100%{
+			height:200px;
+			overflow:hidden;
+			}
+		}
+		.training{
+			position:absolute;
+		}
     </style>
 </head>
 <body>
-    <h1>Selecciona un color:</h1>
-    <select id="miSelector">
+    <h1>Selecciona una parte:</h1>
+    <select id="miSelector" >
+        <option value="0" selected disabled hidden>seleccionar parte</option>
         <option value="cuello">cuello</option>
         <option value="trapecio">trapecio</option>
         <option value="hombro_posterior">hombro  posterior</option>
@@ -73,7 +110,7 @@
         <option value="abdomen">abdomen</option>
         <option value="flexor_largo">flexor largo</option>
         <option value="flexor_comun_profundo">flexor_comun profundo</option>
-        <option value="abductor_largo">abductor largo</option>
+        <option value="aductor_corto">aductor corto</option>
         <option value="cuadriceps">cuadriceps</option>
         <option value="abductores">abductores</option>
         <option value="aductor_largo">aductor largo</option>
@@ -209,7 +246,7 @@
 				C 71.996 104.217 71.022 102.561 68.878 100.759 
 				C 64.153 96.082 63.91 90.48 60.061 90.286 
 				z"/>
-				<path class="parte" id="abductor_largo" 
+				<path class="parte" id="aductor_corto" 
 				d="
 				M 53.284 103.375 
 				C 50.396 109.152 48.39 114.447 47.508 120.544 
@@ -282,17 +319,82 @@
 			"/>
 		</svg>
 	</div>
-
+	<div id="info">
+		<div class="opcion" value="cuello">el cuello
+			<select class="training">
+				<option class="" value="" ></option>
+			</select>
+		</div>
+        <div class="opcion" value="trapecio">trapecio
+			<select class="training">
+				<option class="" value="" ></option>
+			</select>
+		</div>
+        <div class="opcion" value="hombro_posterior">hombro  posterior</div>
+        <div class="opcion" value="hombro_medial">hombro medial</div>
+        <div class="opcion" value="triceps">triceps
+			<select class="training">
+				<option class="" value="" ></option>
+			</select>
+		</div>
+        <div class="opcion" value="dorsal">dorsal
+			<select class="training">
+				<option class="" value="dominadas" >dominadas</option>
+				<option class="" value="dorslera_en_maquina" >dorslera_en_maquina</option>
+				<option class="" value="remo_en_polea" >remo_en_polea</option>
+				<option class="" value="remo_en_maquina" >remo_en_maquina</option>
+			</select>
+		</div>
+        <div class="opcion" value="serrato">serrato</div>
+        <div class="opcion" value="abdomen">abdomen</div>
+        <div class="opcion" value="flexor_largo">flexor largo</div>
+        <div class="opcion" value="flexor_comun_profundo">flexor_comun profundo</div>
+        <div class="opcion" value="aductor_corto">aductor corto</div>
+        <div class="opcion" value="cuadriceps">cuadriceps</div>
+        <div class="opcion" value="abductores">abductores</div>
+        <div class="opcion" value="aductor_largo">aductor largo</div>
+        <div class="opcion" value="soleo">soleo</div>
+        <div class="opcion" value="gemelos">gemelos</div>
+        <div class="opcion" value="oblicuos">oblicuos</div>
+	</div>
     <script>
+	var altura_texto="50px";
+	
+	
+	
 		const selector = document.getElementById("miSelector");
 		selector.onchange = function() {seleccionado()}
 		function seleccionado(){
-			const elemento = document.getElementById(selector.value);
-			const partes = document.getElementsByClassName("parte");
+			var elemento = document.getElementById(selector.value);
+			var partes = document.getElementsByClassName("parte");
+			var info = document.getElementsByClassName("opcion");
+			
+			
 			for(var i=0; i<partes.length;i++){
 				partes[i].classList.remove("rojo");
 			}
 			elemento.classList.add("rojo");
+			var index_info =0;
+			for(var i=0; i<info.length;i++){
+				//console.log(info[i]);
+				
+				//aca va lo que queres sacar
+				
+				info[i].style.visibility="hidden";
+				info[i].style.height="0";
+				info[index_info].classList.remove("desplegar");
+				if(selector.value==info[i].getAttribute("value")){
+					index_info = i;
+					//console.log(i);
+				}
+			}
+			
+			//aca lo que queres poner
+			
+			info[index_info].setAttribute("style","visibility:visible;transform:translate(10px,"+altura_texto+");");
+			info[index_info].classList.add("desplegar");
+			//console.log(info);
+			//console.log(info.textContent);
 		}
     </script>
 </body>
