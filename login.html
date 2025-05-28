@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Login/Registro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+			
+			background:#161719;
+        }
+        
+        .container {
+			position:absolute;
+			top:70%;
+			left:50%;
+			transform:translate(-50%,-50%);
+            display: flex;
+            flex-direction: row;
+            gap: 50px;
+			background:#161719;
+			padding:10px;
+			border-radius:15px;
+			border:solid 2px rgb(255,200,200);
+			box-shadow:inset 0 0 0.75rem red,
+							 0 0 0.75rem red;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        
+        input {
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid rgb(255,200,200);
+            border-radius: 4px;
+			width:90%;
+			background:#161719;
+        }
+        
+        button {
+            padding: 10px;
+            background-color: #ec0e27;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+			width:100%;
+        }
+        
+        button:hover {
+            background-color: #da2436;
+        }
+		.register_form{
+			//background:red;
+			padding:20px;
+			border-radius:10px;
+			z-index:1;
+		}
+		.login_form{
+			//background:blue;
+			padding:20px;
+			border-radius:10px;
+			z-index:1;
+		}
+		.cards{
+			width:200px;
+			height: auto;
+			border:solid 2px rgb(255,200,200);
+			box-shadow:inset 0 0 0.75rem red,
+							 0 0 0.75rem red;
+		}
+		#placa{
+			background:#ec0e27;
+			position:absolute;
+			top:50%;
+			left:77%;
+			transform:translate(-50%,-50%);
+			width:50%;
+			height:110%;
+			z-index:1;
+			border-radius:0px 15px 15px 0px;
+			box-shadow:inset 0 0 1.5rem black;
+		}
+		#login{
+			padding: 0px;
+			position:relative;
+            background:none;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+			width:auto;
+			left:0%;
+			text-decoration-line: underline;
+		}
+		#regist{
+			padding: 0px;
+			position:relative;
+            background:none;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+			width:auto;
+			left:88%;
+			text-decoration-line: underline;
+		}
+		.mover_izquierda{
+		animation:moveizq 0.5s linear forwards;
+		}
+		@keyframes moveizq{
+		100%{left:23%;border-radius: 15px 0px 0px 15px;}
+		0%{left:77%;border-radius: 0px 15px 15px 0px; }
+		}
+		
+		.mover_derecha{
+		animation:moveder 0.5s linear forwards;
+		}
+		@keyframes moveder{
+		0%{left:23%;border-radius: 15px 0px 0px 15px;}
+		100%{left:77%;border-radius: 0px 15px 15px 0px;}
+		}
+		#logo{
+			//background:none;
+			width:auto;
+			font-size: 24px;
+			font-family: Cursive;
+			height:50px;
+			display:flex;
+			justify-content:center;
+			align-items:center;
+			position:absolute;
+			bottom:75%;
+			transform:scale(1.2);
+		}
+    </style>
+</head>
+<body>
+	<div id="logo"><img src="https://img.freepik.com/premium-vector/gym-center-logo-logo-design-gym-center_1152818-25.jpg?semt=ais_hybrid&w=740" width="400" height="300" /></div>
+    <div class="container">
+        <!-- Formulario de Registro -->
+        <div class="register_form cards">
+			<button id="regist" onclick="reg()" >Login</button>
+            <h2 style="color: white;font-family: 'Courier New', monospace;">Registro</h2>
+            <div class="form-group">
+                <input type="email" id="reg-email" placeholder="Correo electrónico">
+                <input type="password" id="reg-password" placeholder="Contraseña">
+                <input type="tel" id="reg-phone" placeholder="Número de teléfono">
+                <button onclick="registrar()">Registrar</button>
+            </div>
+        </div>
+
+        <!-- Formulario de Login -->
+        <div class="login_form cards">
+			<button id="login" onclick="log()" >Regist</button>
+            <h2 style="color: white;font-family: 'Courier New', monospace;">Login</h2>
+            <div class="form-group" >
+				<div style="margin-bottom:40px">
+					<input type="text" id="login-email" placeholder="Usuario o Email">
+					<input type="password" id="login-password" placeholder="Contraseña">
+				</div>
+                <button style="width:100%;" onclick="login()">Ingresar</button>
+            </div>
+        </div>
+		<div id="placa"></div>
+    </div>
+	
+
+    <script>
+		//card login********************************************
+		var card=document.getElementById("placa");
+		var card_state=0;
+		function reg(){
+			if(card_state==0){
+				card_state=1;
+				console.log(card_state);
+			}
+			update();
+		}
+		function log(){
+			if(card_state==1){
+				card_state=0;
+				console.log(card_state);
+			}
+			update();
+		}
+		function update(){
+			if(card_state==0){
+				card.classList.remove("mover_izquierda");
+				card.classList.add("mover_derecha");
+			}else{
+				card.classList.add("mover_izquierda");
+				card.classList.remove("mover_derecha");
+			}
+		}
+        // Variables para almacenar los datos
+        let mail = '';
+        let contraseña = '';
+        let telefono = '';
+        let usuarioLogin = '';
+        let contraseñaLogin = '';
+
+        function registrar() {
+            // Obtener valores del formulario de registro
+            mail = document.getElementById('reg-email').value;
+            contraseña = document.getElementById('reg-password').value;
+            telefono = document.getElementById('reg-phone').value;
+            
+            console.log('Datos registrados:');
+            console.log('Email:', mail);
+            console.log('Contraseña:', contraseña);
+            console.log('Teléfono:', telefono);
+            
+            // Limpiar campos después del registro
+            document.getElementById('reg-email').value = '';
+            document.getElementById('reg-password').value = '';
+            document.getElementById('reg-phone').value = '';
+        }
+
+        function login() {
+            // Obtener valores del formulario de login
+            usuarioLogin = document.getElementById('login-email').value;
+            contraseñaLogin = document.getElementById('login-password').value;
+            
+            console.log('Datos de login:');
+            console.log('Usuario/Email:', usuarioLogin);
+            console.log('Contraseña:', contraseñaLogin);
+            
+            // Limpiar campos después del login
+            document.getElementById('login-email').value = '';
+            document.getElementById('login-password').value = '';
+        }
+    </script>
+</body>
+</html>
